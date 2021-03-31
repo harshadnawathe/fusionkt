@@ -62,5 +62,12 @@ class JsonModel<T>(
                 json = mapper.readTree(file)
             )
         }
+
+        inline fun <reified T> of(block: () -> Unit): JsonModel<T> {
+            return JsonModel(
+                type = jacksonTypeRef(),
+                json = mapper.createObjectNode()
+            )
+        }
     }
 }
