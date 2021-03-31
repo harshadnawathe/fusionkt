@@ -17,7 +17,7 @@ internal data class Single(
 )
 
 internal data class Generic<T>(
-    val value: T
+    val value: T?
 )
 
 internal data class Pair(

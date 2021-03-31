@@ -1,6 +1,5 @@
 package com.github.harshadnawathe.fusionkt.json
 
-import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.JsonNodeFactory
@@ -79,7 +78,7 @@ class JsonNodeBuilder {
 
     val node: ObjectNode = JsonNodeFactory.instance.objectNode()
 
-    infix fun String.having(value: Any) {
+    infix fun String.having(value: Any?) {
         node.putPOJO(this, value)
     }
 

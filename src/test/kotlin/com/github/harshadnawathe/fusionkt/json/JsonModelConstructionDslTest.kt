@@ -38,6 +38,17 @@ class JsonModelConstructionDslTest {
 
         actualValue shouldBe Generic(Pair("Superman", "Clark Kent"))
     }
+
+    @Test
+    fun `should construct a JsonModel with a null field`() {
+        val model = JsonModel.of<Generic<Pair>> {
+            "value" having null
+        }
+
+        val actualValue = model.value
+
+        actualValue shouldBe Generic<Single>(null)
+    }
 }
 
 
