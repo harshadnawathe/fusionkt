@@ -13,4 +13,15 @@ class JsonModelCompletenessTest {
 
         isComplete shouldBe true
     }
+
+    @Test
+    fun `should return false when JsonModel is not complete`() {
+        val model = JsonModel.from<Pair>(
+            jsonText = "{ \"key\": \"Robin\" }"
+        )
+
+        val isComplete: Boolean = model.isComplete
+
+        isComplete shouldBe false
+    }
 }

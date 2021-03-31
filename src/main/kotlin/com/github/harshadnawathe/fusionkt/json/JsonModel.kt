@@ -12,7 +12,11 @@ class JsonModel<T>(
 ) {
 
     val isComplete: Boolean
-        get() = true
+        get() = try {
+            value.let { true }
+        } catch (_: Throwable) {
+            false
+        }
 
     val value: T by lazy {
         mapper.convertValue(json, type)
