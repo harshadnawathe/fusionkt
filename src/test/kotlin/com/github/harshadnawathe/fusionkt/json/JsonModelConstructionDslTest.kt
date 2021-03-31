@@ -24,6 +24,20 @@ class JsonModelConstructionDslTest {
 
         actualValue shouldBe Single("Kryptonite")
     }
+
+    @Test
+    fun `should construct a JsonModel with a nested field`() {
+        val model = JsonModel.of<Generic<Pair>> {
+            "value" having obj {
+                "key" having "Superman"
+                "value" having "Clark Kent"
+            }
+        }
+
+        val actualValue = model.value
+
+        actualValue shouldBe Generic(Pair("Superman", "Clark Kent"))
+    }
 }
 
 

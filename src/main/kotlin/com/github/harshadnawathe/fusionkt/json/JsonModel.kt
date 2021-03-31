@@ -82,4 +82,8 @@ class JsonNodeBuilder {
     infix fun String.having(value: Any) {
         node.putPOJO(this, value)
     }
+
+    fun obj(block: JsonNodeBuilder.() -> Unit): Any {
+        return JsonNodeBuilder().apply(block).node
+    }
 }
