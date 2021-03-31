@@ -14,6 +14,13 @@ class JsonModel<T>(
         mapper.convertValue(json, type)
     }
 
+    infix fun with(overrides: Any) : JsonModel<T> {
+        return JsonModel(
+            type = type,
+            json = mapper.updateValue(json, overrides)
+        )
+    }
+
     companion object {
         val mapper = jacksonObjectMapper()
 
