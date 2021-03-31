@@ -3,7 +3,7 @@ package com.github.harshadnawathe.fusionkt.json
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class JsonModelTest {
+class JsonModelConstructionTest {
 
     @Test
     fun `should construct a JsonModel with given value`() {
