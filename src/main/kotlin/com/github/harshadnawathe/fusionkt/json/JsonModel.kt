@@ -10,15 +10,18 @@ class JsonModel<T>(
     private val json: JsonNode
 ) {
 
-    val value : T by lazy {
+    val value: T by lazy {
         mapper.convertValue(json, type)
     }
 
-    infix fun with(overrides: Any) : JsonModel<T> {
-        return JsonModel(
-            type = type,
-            json = mapper.updateValue(json, overrides)
-        )
+    infix fun with(override: Any): JsonModel<T> {
+        return when (override) {
+            is JsonModel<*> -> this with override.json
+            else -> JsonModel(
+                type = type,
+                json = mapper.updateValue(json, override)
+            )
+        }
     }
 
     companion object {
