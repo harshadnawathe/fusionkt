@@ -29,5 +29,19 @@ class JsonModelConstructionTest {
 
         actualValue shouldBe Empty()
     }
+
+    @Test
+    fun `should construct a JsonModel from json text`() {
+        val model = JsonModel.from<Pair>(
+            jsonText = """{
+                | "key": "Robin",
+                | "value": "Tim Drake"
+                |}""".trimMargin()
+        )
+
+        val actualValue = model.value
+
+        actualValue shouldBe Pair("Robin", "Tim Drake")
+    }
 }
 

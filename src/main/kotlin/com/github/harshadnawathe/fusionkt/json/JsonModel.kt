@@ -40,5 +40,12 @@ class JsonModel<T>(
                 json = mapper.valueToTree(value)
             )
         }
+
+        inline fun <reified T> from(jsonText: String): JsonModel<T> {
+            return JsonModel(
+                type = jacksonTypeRef(),
+                json = mapper.readTree(jsonText)
+            )
+        }
     }
 }
