@@ -2,6 +2,7 @@ package com.github.harshadnawathe.fusionkt.json
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import java.io.File
 
 class JsonModelConstructionTest {
 
@@ -16,7 +17,7 @@ class JsonModelConstructionTest {
     fun `should construct a JsonModel with an instance of a generic`() {
         val model = JsonModel.from(Generic("Batman"))
 
-        val actualValue  = model.value
+        val actualValue = model.value
 
         actualValue shouldBe Generic("Batman")
     }
@@ -42,6 +43,19 @@ class JsonModelConstructionTest {
         val actualValue = model.value
 
         actualValue shouldBe Pair("Robin", "Tim Drake")
+    }
+
+    @Test
+    fun `should construct a JsonModel from a File`() {
+        val file = ClassLoader.getSystemResource("pair.json")
+            .toURI().let { uri ->
+                File(uri)
+            }
+        val model = JsonModel.from<Pair>(file = file)
+
+        val actualValue = model.value
+
+        actualValue shouldBe Pair("Robin", "Stephanie Brown")
     }
 }
 

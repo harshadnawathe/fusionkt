@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import java.io.File
 
 class JsonModel<T>(
     private val type: TypeReference<T>,
@@ -45,6 +46,13 @@ class JsonModel<T>(
             return JsonModel(
                 type = jacksonTypeRef(),
                 json = mapper.readTree(jsonText)
+            )
+        }
+
+        inline fun <reified T> from(file: File): JsonModel<T> {
+            return JsonModel(
+                type = jacksonTypeRef(),
+                json = mapper.readTree(file)
             )
         }
     }
