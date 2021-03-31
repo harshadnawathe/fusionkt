@@ -14,5 +14,16 @@ class JsonModelConstructionDslTest {
         actualValue shouldBe Empty()
     }
 
+    @Test
+    fun `should construct a JsonModel with single field`() {
+        val model = JsonModel.of<Single> {
+            "value" having "Kryptonite"
+        }
 
+        val actualValue = model.value
+
+        actualValue shouldBe Single("Kryptonite")
+    }
 }
+
+

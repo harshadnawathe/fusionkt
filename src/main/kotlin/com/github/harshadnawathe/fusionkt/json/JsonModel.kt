@@ -1,7 +1,10 @@
 package com.github.harshadnawathe.fusionkt.json
 
+import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node.JsonNodeFactory
+import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import java.io.File
@@ -63,11 +66,20 @@ class JsonModel<T>(
             )
         }
 
-        inline fun <reified T> of(block: () -> Unit): JsonModel<T> {
+        inline fun <reified T> of(block: JsonNodeBuilder.() -> Unit): JsonModel<T> {
             return JsonModel(
                 type = jacksonTypeRef(),
-                json = mapper.createObjectNode()
+                json = JsonNodeBuilder().apply(block).node
             )
         }
+    }
+}
+
+class JsonNodeBuilder {
+
+    val node: ObjectNode = JsonNodeFactory.instance.objectNode()
+
+    infix fun String.having(value: Any) {
+        node.putPOJO(this, value)
     }
 }
