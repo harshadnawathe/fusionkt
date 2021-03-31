@@ -21,4 +21,15 @@ class JsonModelMergeTest {
 
         result.value shouldBe Pair("Robin", "Json Todd")
     }
+
+    @Test
+    fun `should combine the model with given value`() {
+        val incomplete = JsonModel.from<Pair>(
+            jsonText = "{ \"key\": \"Batman\" }"
+        )
+
+        val result = incomplete with mapOf("value" to "Bruce Wayne")
+
+        result.value shouldBe Pair("Batman", "Bruce Wayne")
+    }
 }
