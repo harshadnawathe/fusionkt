@@ -20,5 +20,14 @@ class JsonModelConstructionTest {
 
         actualValue shouldBe Generic("Batman")
     }
+
+    @Test
+    fun `should construct an empty JsonModel of a given object type`() {
+        val model = JsonModel.of<Empty>()
+
+        val actualValue = model.value
+
+        actualValue shouldBe Empty()
+    }
 }
 

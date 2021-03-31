@@ -27,6 +27,13 @@ class JsonModel<T>(
     companion object {
         val mapper = jacksonObjectMapper()
 
+        inline fun <reified T> of(): JsonModel<T> {
+            return JsonModel(
+                type = jacksonTypeRef(),
+                json = mapper.createObjectNode()
+            )
+        }
+
         inline fun <reified T> from(value: T): JsonModel<T> {
             return JsonModel(
                 type = jacksonTypeRef(),
