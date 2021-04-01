@@ -80,16 +80,22 @@ class JsonModel<T>(
     }
 }
 
-class JsonNodeBuilder {
+interface JsonModelCustomizer {
+    val array: JsonArrayBuilder
+    infix fun String.having(value: Any?)
+    fun obj(block: JsonNodeBuilder.() -> Unit): Any
+}
 
-    val array = JsonArrayBuilder()
+class JsonNodeBuilder : JsonModelCustomizer {
+
+    override val array = JsonArrayBuilder()
     val node: ObjectNode = JsonNodeFactory.instance.objectNode()
 
-    infix fun String.having(value: Any?) {
+    override infix fun String.having(value: Any?) {
         node.putPOJO(this, value)
     }
 
-    fun obj(block: JsonNodeBuilder.() -> Unit): Any {
+    override fun obj(block: JsonNodeBuilder.() -> Unit): Any {
         return JsonNodeBuilder().apply(block).node
     }
 }
