@@ -1,7 +1,11 @@
 package com.github.harshadnawathe.fusionkt.json
 
+import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.JsonSerializer
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.JsonNodeFactory
 import com.fasterxml.jackson.databind.node.ObjectNode
@@ -9,6 +13,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import java.io.File
 
+@JsonSerialize(using = JsonModelSerializer::class)
 class JsonModel<T>(
     private val type: TypeReference<T>,
     private val json: JsonNode
@@ -98,5 +103,12 @@ class JsonArrayBuilder {
                 acc.addPOJO(any)
             }
         }
+    }
+}
+
+class JsonModelSerializer : JsonSerializer<JsonModel<*>>() {
+
+    override fun serialize(jsonModel: JsonModel<*>, gen: JsonGenerator, serializers: SerializerProvider) {
+        gen.writeObject(jsonModel.value)
     }
 }
