@@ -2,6 +2,7 @@ package com.github.harshadnawathe.fusionkt.json
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.JsonNodeFactory
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -76,6 +77,7 @@ class JsonModel<T>(
 
 class JsonNodeBuilder {
 
+    val array = JsonArrayBuilder()
     val node: ObjectNode = JsonNodeFactory.instance.objectNode()
 
     infix fun String.having(value: Any?) {
@@ -84,5 +86,17 @@ class JsonNodeBuilder {
 
     fun obj(block: JsonNodeBuilder.() -> Unit): Any {
         return JsonNodeBuilder().apply(block).node
+    }
+}
+
+class JsonArrayBuilder {
+    private val factory = JsonNodeFactory.instance
+
+    operator fun get(vararg elements: Any): ArrayNode {
+        return factory.arrayNode().let { node ->
+            elements.fold(node) { acc, any ->
+                acc.addPOJO(any)
+            }
+        }
     }
 }
