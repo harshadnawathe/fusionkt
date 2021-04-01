@@ -62,6 +62,19 @@ class JsonModelConstructionDslTest {
 
         actualValue shouldBe Generic(listOf("a", "b"))
     }
+
+    @Test
+    fun `should construct a JsonModel with array field containing null elements`() {
+        val model = JsonModel.of<Generic<List<String>>> {
+            "value" having array[
+                    "a", null
+            ]
+        }
+
+        val actualValue = model.value
+
+        actualValue shouldBe Generic(listOf("a", null))
+    }
 }
 
 

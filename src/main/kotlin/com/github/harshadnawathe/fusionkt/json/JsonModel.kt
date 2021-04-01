@@ -92,7 +92,7 @@ class JsonNodeBuilder {
 class JsonArrayBuilder {
     private val factory = JsonNodeFactory.instance
 
-    operator fun get(vararg elements: Any): ArrayNode {
+    operator fun get(vararg elements: Any?): ArrayNode {
         return factory.arrayNode().let { node ->
             elements.fold(node) { acc, any ->
                 acc.addPOJO(any)
